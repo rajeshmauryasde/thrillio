@@ -1,9 +1,11 @@
 package com.simple.thrillio.managers;
 
+import com.simple.thrillio.dao.UserDao;
 import com.simple.thrillio.entities.User;
 
 public class UserManager {
 	private static UserManager userManager = new UserManager();
+	private UserDao dao = new UserDao();
 
 	private UserManager() {
 	}
@@ -23,6 +25,10 @@ public class UserManager {
 		user.setGender(gender);
 		user.setUserType(userType);
 		return user;
+	}
+
+	public User[] getUser() {
+		return dao.getUsers();
 	}
 
 }
