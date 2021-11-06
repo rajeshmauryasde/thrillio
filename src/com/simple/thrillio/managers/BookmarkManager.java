@@ -4,6 +4,8 @@ import com.simple.thrillio.dao.BookmarkDao;
 import com.simple.thrillio.entities.Book;
 import com.simple.thrillio.entities.Bookmark;
 import com.simple.thrillio.entities.Movie;
+import com.simple.thrillio.entities.User;
+import com.simple.thrillio.entities.UserBookmark;
 import com.simple.thrillio.entities.Weblink;
 
 public class BookmarkManager {
@@ -57,5 +59,13 @@ public class BookmarkManager {
 
 	public Bookmark[][] getBookmark() {
 		return dao.getBookmark();
+	}
+
+	public void saveUserBookmark(User user, Bookmark bookmark) {
+		UserBookmark userBookmark = new UserBookmark();
+		userBookmark.setUser(user);
+		userBookmark.setBookmark(bookmark);
+		
+		dao.saveUserBookmark(userBookmark);
 	}
 }
