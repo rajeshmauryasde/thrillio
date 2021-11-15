@@ -5,6 +5,7 @@ import com.simple.thrillio.constants.UserType;
 import com.simple.thrillio.controllers.BookmarkController;
 import com.simple.thrillio.entities.Bookmark;
 import com.simple.thrillio.entities.User;
+import com.simple.thrillio.partner.Shareable;
 
 public class View {
 //	public static void bookmark(User user, Bookmark[][] bookmarks) {
@@ -37,21 +38,37 @@ public class View {
 				}
 
 				if (user.getUserType().equals(UserType.CHIEF_EDITOR) || user.getUserType().equals(UserType.EDITOR)) {
+					// Marking kid friendly
 					if (bookmark.isKidFriendlyEligible()
 							&& bookmark.getKidFriendlyStatus().equals(KidFriendlyStatus.UNKNOWN)) {
 						String kidFriendlyStatus = getKidFriendlyStatusDecision(bookmark);
 						if (!kidFriendlyStatus.equals(KidFriendlyStatus.UNKNOWN)) {
-							bookmark.setKidFriendlyStatus(kidFriendlyStatus);
-							System.out.println("\nKid friendly status: " + kidFriendlyStatus + ", " + bookmark + "\n");
+							BookmarkController.getInstance().setKidFriendlyStatus(user, kidFriendlyStatus, bookmark);
 						}
 					}
+
+					// Shareable!!
+					if (bookmark.isKidFriendlyEligible()
+							&& bookmark.getKidFriendlyStatus().equals(KidFriendlyStatus.APPROVED)
+							&& bookmark instanceof Shareable) {
+						boolean shareable = getShareableDecision();
+						if (shareable) {
+							BookmarkController.getInstance().share(user, bookmark);
+						}
+
+					}
+
 				}
 			}
 		}
 	}
-
+	
+	// TODO: Simulation of user input. In future after I/O chapter I will implement it.
+	private static boolean getShareableDecision() {
+		return Math.random() < 0.5 ? true : false;
+	}
+	
 	private static String getKidFriendlyStatusDecision(Bookmark bookmark) {
-		// TODO Auto-generated method stub
 		double randomValue = Math.random();
 
 		if (randomValue < 0.4) {
@@ -62,9 +79,9 @@ public class View {
 			return KidFriendlyStatus.UNKNOWN;
 		}
 	}
-
+	
+	// TODO: Simulation of user input. In future after I/O chapter I will implement it.
 	private static boolean getBookmarkDecision(Bookmark bookmark) {
-		// TODO Auto-generated method stub
 		return Math.random() < 0.5 ? true : false;
 	}
 

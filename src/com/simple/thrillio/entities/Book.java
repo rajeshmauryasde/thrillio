@@ -61,7 +61,6 @@ public class Book extends Bookmark implements Shareable {
 
 	@Override
 	public boolean isKidFriendlyEligible() {
-		// TODO Auto-generated method stub
 		if (genre.equals(BookGenre.PHILOSOPHY) || genre.equals(BookGenre.SELF_HELP)) {
 			return false;
 		}
@@ -73,7 +72,6 @@ public class Book extends Bookmark implements Shareable {
 		for (String author : authors) {
 			sb.append(author).append(delimiter);
 		}
-		sb.delete(sb.length() - delimiter.length(), delimiter.length());
 		return sb.toString();
 	}
 

@@ -29,7 +29,6 @@ public class Weblink extends Bookmark implements Shareable {
 
 	@Override
 	public boolean isKidFriendlyEligible() {
-		// TODO Auto-generated method stub
 		if (url.contains("porn") || getTitle().contains("porn") || host.contains("adult")
 				|| (url.contains("adult") && getTitle().contains("adult"))) {
 			return false;
