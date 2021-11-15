@@ -72,6 +72,9 @@ public class Book extends Bookmark implements Shareable {
 		for (String author : authors) {
 			sb.append(author).append(delimiter);
 		}
+		for (int i = 0; i < delimiter.length(); i++) {
+			sb.deleteCharAt(sb.length() - 1);
+		}
 		return sb.toString();
 	}
 
