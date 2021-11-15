@@ -2,7 +2,10 @@ package com.simple.thrillio.entities;
 
 import java.util.Arrays;
 
-public class Book extends Bookmark {
+import com.simple.thrillio.constants.BookGenre;
+import com.simple.thrillio.partner.Shareable;
+
+public class Book extends Bookmark implements Shareable {
 
 	private int publicationYear;
 	private String publisher;
@@ -54,6 +57,41 @@ public class Book extends Bookmark {
 	public String toString() {
 		return super.toString() + " Book [publicationYear=" + publicationYear + ", publisher=" + publisher + ", authors="
 				+ Arrays.toString(authors) + ", genre=" + genre + ", amazonRating=" + amazonRating + "]";
+	}
+
+	@Override
+	public boolean isKidFriendlyEligible() {
+		// TODO Auto-generated method stub
+		if (genre.equals(BookGenre.PHILOSOPHY) || genre.equals(BookGenre.SELF_HELP)) {
+			return false;
+		}
+		return true;
+	}
+	
+	private String join(String[] list, String delimiter) {
+		StringBuilder sb = new StringBuilder();
+		for (String author : authors) {
+			sb.append(author).append(delimiter);
+		}
+		sb.delete(sb.length() - delimiter.length(), delimiter.length());
+		return sb.toString();
+	}
+
+	@Override
+	public String getItemData() {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("<item>");
+		sb.append("<title>").append(getTitle()).append("</item>");
+		sb.append("<type>Book</type>");
+		sb.append("<authors>").append(join(authors, ", ")).append("</authors>");
+		sb.append("<publisher>").append(publisher).append("</publisher>");
+		sb.append("<publicationYear>").append(publicationYear).append("</publicationYear>");
+		sb.append("<genre>").append(genre).append("</genre>");
+		sb.append("<amazonRating>").append(amazonRating).append("</amazonRating>");
+		sb.append("</item>");
+		
+		return sb.toString();
 	}
 
 }

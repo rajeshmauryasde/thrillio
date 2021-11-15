@@ -1,10 +1,15 @@
 package com.simple.thrillio.entities;
 
-public class Bookmark {
+import com.simple.thrillio.constants.KidFriendlyStatus;
+
+public abstract class Bookmark {
 
 	private long id;
 	private String title;
 	private String profileUrl;
+	private String kidFriendlyStatus = KidFriendlyStatus.UNKNOWN;
+	
+	public abstract boolean isKidFriendlyEligible();
 
 	public long getId() {
 		return id;
@@ -33,6 +38,14 @@ public class Bookmark {
 	@Override
 	public String toString() {
 		return "Bookmark [id=" + id + ", title=" + title + ", profileUrl=" + profileUrl + "]";
+	}
+
+	public String getKidFriendlyStatus() {
+		return kidFriendlyStatus;
+	}
+
+	public void setKidFriendlyStatus(String kidFriendlyStatus) {
+		this.kidFriendlyStatus = kidFriendlyStatus;
 	}
 
 }
